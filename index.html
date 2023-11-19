@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <header>
+        <nav></nav>
+        <time></time>
+    </header>
+
+    <main>
+        <article class="startScreen">
+            <h1>Coding Quiz</h1>
+            <p>This quiz will test your knowledge on some coding-related topics.<br>You start with 60 seconds to complete the quiz. Wrong answers will subtract 5 seconds from your timer.</p>
+            <button class="start" onclick="startGame()">Start Game</button>
+        </article>
+        <article>
+            <section class="question"></section>
+            <section class="answeres">
+                <button></button>
+                <button></button>
+                <button></button>
+                <button></button>
+            </section>
+            <section class="result"></section>
+        </article>
+        <article>
+            <section>Finished</section>
+            <section class="score"></section>
+            <label for "Initials">Enter initials:</label>
+            <input type="text" name="Initials" class="initials">
+            <button>Submit</button>
+        </article>
+    </main>
+
+    <script src="./assets/script.js"></script>
+</body>
+</html>
