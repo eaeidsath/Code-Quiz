@@ -4,4 +4,13 @@
 
 body {
     background-color: #b49b9f;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: antiquewhite;
+    margin: 10px;
+    padding: 10px;
 }

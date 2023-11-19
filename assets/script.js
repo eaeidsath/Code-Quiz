@@ -1,5 +1,8 @@
 var score = 0
 var initials = document.querySelector(".initials");
+var timerCount;
+var timerElement = document.getElementById("timer");
+var isFinished = false;
 
 var questions = [{
     q: "Why do developers use loops such as for and while?",
@@ -49,6 +52,9 @@ function toggleScreen(id, toggle) {
 function startGame() {
     this.toggleScreen("startScreen", false);
     this.toggleScreen("quiz", true);
+    isFinished = false;
+    timerCount = 60;
+    startTimer();
 }
 
 function loadQuestion() {
@@ -85,5 +91,29 @@ function nextQuestion() {
     } else {
         document.getElementById("quiz").remove();
         loadScore();
+    }
+}
+
+function startTimer() {
+    timer = setInterval(function() {
+        timerCount--;
+        timerElement.textContent = timerCount + " seconds left.";
+        //if (timerCount >= 0) {
+        //    if (isFinished && timerCount > 0) {
+        //        clearInterval(timer);
+        //        loadScore();
+        //    }
+        //}
+        if (timerCount === 0) {
+            clearInterval(timer);
+            loadScore();
+        }
+    }, 1000);
+}
+
+function checkFinished() {
+    //figure out some parameter to tell when the quiz is finished
+    if (currentQuestion > 4) {
+        isFinished = true;
     }
 }
