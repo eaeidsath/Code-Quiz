@@ -13,12 +13,12 @@
     </header>
 
     <main>
-        <article class="startScreen">
+        <article id="startScreen">
             <h1>Coding Quiz</h1>
-            <p>This quiz will test your knowledge on some coding-related topics.<br>You start with 60 seconds to complete the quiz. Wrong answers will subtract 5 seconds from your timer.</p>
+            <p>This quiz will test your knowledge on some coding-related topics.<br>You start with 60 seconds to complete the quiz. Wrong answers will subtract 10 seconds from your timer.</p>
             <button class="start" onclick="startGame()">Start Game</button>
         </article>
-        <article>
+        <article id="quiz" style="display: none;">
             <section class="question"></section>
             <section class="answeres">
                 <button></button>
@@ -28,8 +28,8 @@
             </section>
             <section class="result"></section>
         </article>
-        <article>
-            <section>Finished</section>
+        <article id="endScreen" style="display: none;">
+            <section>Finished.</section>
             <section class="score"></section>
             <label for "Initials">Enter initials:</label>
             <input type="text" name="Initials" class="initials">
