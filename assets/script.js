@@ -194,4 +194,12 @@ function checkFinished() {
 
 init();
 
-//put score reset on the return button when returning from high score screen
+returnButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    toggleScreen("scoreScreen", false);
+    toggleScreen("header", true);
+    toggleScreen("startScreen", true);
+    isFinished = false;
+    score = 0;
+    currentQuestion = 0;
+})
