@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav>View high scores</nav>
         <time id="timer">60 seconds left.</time>
     </header>
@@ -30,6 +30,14 @@
             <input type="text" name="Initials" class="initials">
             <button class="submit">Submit</button>
             <p class="submitMessage"></p>
+        </article>
+        <article id="scoreScreen" style="display: none;">
+            <h2>High Scores</h2>
+            <section>
+                <ol class="highScores"></ol>
+            </section>
+            <button class="return">Return</button>
+            <button class="clear">Clear Scores</button>
         </article>
     </main>
 

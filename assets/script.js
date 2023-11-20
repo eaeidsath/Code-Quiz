@@ -2,11 +2,16 @@ var score = 0;
 var initials = document.querySelector(".initials");
 var timerCount;
 var timerElement = document.getElementById("timer");
+var currentQuestion = 0;
 var isFinished = false;
 var resultMessage = document.querySelector(".result");
 var answerButtons = document.querySelectorAll("button");
 var submitButton = document.querySelector(".submit");
 var submitMessage = document.querySelector(".submitMessage");
+var highScoresList = document.querySelector(".highScores");
+var clearButton = document.querySelector(".clear");
+var returnButton = document.querySelector(".return");
+var finishValue = 0;
 
 var questions = [{
     q: "Why do developers use loops such as for and while?",
@@ -45,7 +50,7 @@ var questions = [{
     }
 ];
 
-var currentQuestion = 0;
+var highScores = [];
 
 function toggleScreen(id, toggle) {
     var element = document.getElementById(id);
@@ -71,7 +76,7 @@ function loadQuestion() {
     for (let i = 0; i < questions[currentQuestion].a.length; i++) {
         const choice = document.createElement("button");
  
-        choice.type = "radio";
+        //choice.type = "radio";
         choice.name = "answer";
         choice.value = i;
  
@@ -87,6 +92,7 @@ function loadScore() {
     this.toggleScreen("quiz", false);
     this.toggleScreen("endScreen", true);
     document.querySelector(".score").textContent = score;
+    checkFinished();
 }
 
 function nextQuestion() {
@@ -94,6 +100,7 @@ function nextQuestion() {
         currentQuestion++;
         loadQuestion();
     } else {
+        finishValue = 1;
         loadScore();
     }
 }
@@ -119,29 +126,59 @@ answer.addEventListener("click", function(event) {
 });
 
 function storeResults() {
-    var scoreAndInitals = {
+    var scoreAndInitials = {
         score: score,
         initials: initials.value
     };
-    localStorage.setItem("quizResults", JSON.stringify(scoreAndInitals));
+    localStorage.setItem("scoreAndInitials", JSON.stringify(scoreAndInitials));
 }
 
-submitButton.addEventListener("click", function() {
+//make submit button take you to high scores page
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (initials === "") {
+        return;
+    }
+    todoText = [score, initials.value];
+    highScores.push(todoText);
     storeResults();
-    submitButton.style.display = "none";
-    submitMessage.textContent = "Your score has been submitted."
+    renderHighscores();
+    toggleScreen("endScreen", false);
+    toggleScreen("header", false);
+    toggleScreen("scoreScreen", true);
 });
+
+function renderHighscores() {
+    highScoresList.innerHTML = "";
+
+    for (var i = 0; i < highScores.length; i++) {
+        var highScore = highScores[i].join(" - ");
+        var li = document.createElement("li");
+
+        li.textContent = highScore;
+        li.setAttribute("data-index", i);
+        highScoresList.appendChild(li);
+    }
+}
+
+function init() {
+    var storedScores = JSON.parse(localStorage.getItem("scoreAndInitials"));
+    if (storedScores !== null) {
+        scoreAndInitials = storedScores;
+    }
+    renderHighscores();
+}
 
 function startTimer() {
     timer = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount + " seconds left.";
-        if (timerCount >= 0) //{
-        //    if (isFinished && timerCount > 0) {
-        //        clearInterval(timer);
-        //        loadScore();
-        //    }
-        //}
+        if (timerCount >= 0) {
+            if (isFinished && timerCount > 0) {
+                clearInterval(timer);
+                loadScore();
+            }
+        }
         if (timerCount === 0) {
             clearInterval(timer);
             loadScore();
@@ -149,9 +186,12 @@ function startTimer() {
     }, 1000);
 }
 
-/* function checkFinished() {
-    //figure out some parameter to tell when the quiz is finished
-    if (currentQuestion > 4) {
+function checkFinished() {
+    if (finishValue === 1) {
         isFinished = true;
     }
-} */
+}
+
+init();
+
+//put score reset on the return button when returning from high score screen
