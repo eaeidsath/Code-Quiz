@@ -1,8 +1,12 @@
-var score = 0
+var score = 0;
 var initials = document.querySelector(".initials");
 var timerCount;
 var timerElement = document.getElementById("timer");
 var isFinished = false;
+var resultMessage = document.querySelector(".result");
+var answerButtons = document.querySelectorAll("button");
+var submitButton = document.querySelector(".submit");
+var submitMessage = document.querySelector(".submitMessage");
 
 var questions = [{
     q: "Why do developers use loops such as for and while?",
@@ -41,7 +45,7 @@ var questions = [{
     }
 ];
 
-var currentQuestion = 0
+var currentQuestion = 0;
 
 function toggleScreen(id, toggle) {
     var element = document.getElementById(id);
@@ -82,23 +86,57 @@ loadQuestion();
 function loadScore() {
     this.toggleScreen("quiz", false);
     this.toggleScreen("endScreen", true);
+    document.querySelector(".score").textContent = score;
 }
 
 function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
-        generateQuestion();
+        loadQuestion();
     } else {
-        document.getElementById("quiz").remove();
         loadScore();
     }
 }
+
+const answer = document.querySelector(".answers")
+
+answer.addEventListener("click", function(event) {
+    event.preventDefault();
+    function checkAnswer() {
+        var target = event.target.value;
+    
+        if (questions[currentQuestion].a[target].isCorrect) {
+            score++;
+            resultMessage.textContent = "Correct!";
+            nextQuestion();
+        } else {
+            resultMessage.textContent = "Incorrect.";
+            timerCount-=10;
+            nextQuestion();
+        }
+    };
+    checkAnswer();
+});
+
+function storeResults() {
+    var scoreAndInitals = {
+        score: score,
+        initials: initials.value
+    };
+    localStorage.setItem("quizResults", JSON.stringify(scoreAndInitals));
+}
+
+submitButton.addEventListener("click", function() {
+    storeResults();
+    submitButton.style.display = "none";
+    submitMessage.textContent = "Your score has been submitted."
+});
 
 function startTimer() {
     timer = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount + " seconds left.";
-        //if (timerCount >= 0) {
+        if (timerCount >= 0) //{
         //    if (isFinished && timerCount > 0) {
         //        clearInterval(timer);
         //        loadScore();
@@ -111,9 +149,9 @@ function startTimer() {
     }, 1000);
 }
 
-function checkFinished() {
+/* function checkFinished() {
     //figure out some parameter to tell when the quiz is finished
     if (currentQuestion > 4) {
         isFinished = true;
     }
-}
+} */

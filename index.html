@@ -8,15 +8,11 @@
 </head>
 <body>
     <header>
-        <nav></nav>
-        <time></time>
+        <nav>View high scores</nav>
+        <time id="timer">60 seconds left.</time>
     </header>
 
     <main>
-        <header>
-            <section>View high scores</section>
-            <section id="timer">60 seconds left.</section>
-        </header>
         <article id="startScreen">
             <h1>Coding Quiz</h1>
             <p>This quiz will test your knowledge on some coding-related topics.<br>You start with 60 seconds to complete the quiz. Wrong answers will subtract 10 seconds from your timer.</p>
@@ -29,10 +25,11 @@
         </article>
         <article id="endScreen" style="display: none;">
             <section>Finished.</section>
-            <section class="score"></section>
+            <p>Your score is <span class="score"></span>.</p>
             <label for "Initials">Enter initials:</label>
             <input type="text" name="Initials" class="initials">
-            <button>Submit</button>
+            <button class="submit">Submit</button>
+            <p class="submitMessage"></p>
         </article>
     </main>
 
