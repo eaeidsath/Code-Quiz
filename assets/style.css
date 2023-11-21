@@ -1,10 +1,15 @@
+:root {
+    --light: #F2E9E4;
+    --dark: #22223B;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     background-color: #837881;
-    color: #F2E9E4;
+    color: var(--light);
     text-align: center;
     margin: auto;
     font-size: 25px;
@@ -14,17 +19,29 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    background-color: #F2E9E4;
-    color: #22223B;
+    align-items: center;
+    background-color: var(--light);
+    color: var(--dark);
     margin: 10px;
     padding: 10px;
+}
+
+#header button {
+    font-size: 20px;
+    background-color: var(--light);
+    color: var(--dark);
+    border: none;
 }
 
 button {
     padding: 10px;
     font-size: 20px;
     background-color: #4A4E69;
-    color: #F2E9E4;
+    color: var(--light);
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .question {
@@ -63,4 +80,5 @@ input {
 ol {
     width: 150px;
     margin: auto;
+    margin-bottom: 30px;
 }

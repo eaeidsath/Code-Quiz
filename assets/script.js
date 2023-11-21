@@ -7,6 +7,7 @@ var isFinished = false;
 var resultMessage = document.querySelector(".result");
 var answerButtons = document.querySelectorAll("button");
 var submitButton = document.querySelector(".submit");
+var scoreButton = document.querySelector(".scoreButton");
 var submitMessage = document.querySelector(".submitMessage");
 var highScoresList = document.querySelector(".highScores");
 var clearButton = document.querySelector(".clear");
@@ -102,6 +103,8 @@ function nextQuestion() {
     } else {
         finishValue = 1;
         loadScore();
+        currentQuestion = 0;
+        loadQuestion();
     }
 }
 
@@ -136,9 +139,10 @@ function storeResults() {
 //make submit button take you to high scores page
 submitButton.addEventListener("click", function(event) {
     event.preventDefault();
-    if (initials === "") {
-        return;
-    }
+    if (initials.value === "") {
+        var errorMessage = document.getElementById("endScreen").appendChild(document.createElement("p"));
+        errorMessage.textContent = "Please enter your initials.";
+    } else {
     todoText = [score, initials.value];
     highScores.push(todoText);
     storeResults();
@@ -146,9 +150,17 @@ submitButton.addEventListener("click", function(event) {
     toggleScreen("endScreen", false);
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
-    initials.innerHTML = "";
-    submitMessage.innerHTML = "";
+    }
 });
+
+scoreButton.addEventListener("click", function(event) {
+    event.preventDefault;
+    renderHighscores();
+    toggleScreen("startScreen", false);
+    toggleScreen("endScreen", false);
+    toggleScreen("header", false);
+    toggleScreen("scoreScreen", true);
+})
 
 function renderHighscores() {
     highScoresList.innerHTML = "";
@@ -203,7 +215,6 @@ returnButton.addEventListener("click", function(event) {
     toggleScreen("startScreen", true);
     isFinished = false;
     score = 0;
-    currentQuestion = 0;
     finishValue = 0;
     timerElement.textContent = "60 seconds left.";
     document.getElementById("header").style.display = "flex";
