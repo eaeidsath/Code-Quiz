@@ -146,6 +146,8 @@ submitButton.addEventListener("click", function(event) {
     toggleScreen("endScreen", false);
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
+    initials.innerHTML = "";
+    submitMessage.innerHTML = "";
 });
 
 function renderHighscores() {
@@ -202,4 +204,7 @@ returnButton.addEventListener("click", function(event) {
     isFinished = false;
     score = 0;
     currentQuestion = 0;
+    finishValue = 0;
+    timerElement.textContent = "60 seconds left.";
+    document.getElementById("header").style.display = "flex";
 })
