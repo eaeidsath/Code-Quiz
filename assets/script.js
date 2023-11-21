@@ -105,6 +105,7 @@ function nextQuestion() {
         loadScore();
         currentQuestion = 0;
         loadQuestion();
+        resultMessage.innerHTML = "";
     }
 }
 
@@ -128,25 +129,18 @@ answer.addEventListener("click", function(event) {
     checkAnswer();
 });
 
-function storeResults() {
-    var scoreAndInitials = {
-        score: score,
-        initials: initials.value
-    };
-    localStorage.setItem("scoreAndInitials", JSON.stringify(scoreAndInitials));
-}
 
-//make submit button take you to high scores page
 submitButton.addEventListener("click", function(event) {
     event.preventDefault();
     if (initials.value === "") {
         var errorMessage = document.getElementById("endScreen").appendChild(document.createElement("p"));
         errorMessage.textContent = "Please enter your initials.";
     } else {
-    todoText = [score, initials.value];
-    highScores.push(todoText);
+    newScoreText = [score, initials.value];
+    highScores.push(newScoreText);
     storeResults();
     renderHighscores();
+    initials.innerHTML = "";
     toggleScreen("endScreen", false);
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
@@ -162,6 +156,10 @@ scoreButton.addEventListener("click", function(event) {
     toggleScreen("scoreScreen", true);
 })
 
+function storeResults() {
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+
 function renderHighscores() {
     highScoresList.innerHTML = "";
 
@@ -176,10 +174,8 @@ function renderHighscores() {
 }
 
 function init() {
-    var storedScores = JSON.parse(localStorage.getItem("scoreAndInitials"));
-    if (storedScores !== null) {
-        scoreAndInitials = storedScores;
-    }
+    var storedScores = JSON.parse(localStorage.getItem("highScores"));
+    highScores = storedScores;
     renderHighscores();
 }
 
@@ -218,4 +214,11 @@ returnButton.addEventListener("click", function(event) {
     finishValue = 0;
     timerElement.textContent = "60 seconds left.";
     document.getElementById("header").style.display = "flex";
+})
+
+clearButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    highScores = [];
+    localStorage.clear();
+    renderHighscores();
 })
