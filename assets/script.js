@@ -51,6 +51,8 @@ var questions = [{
     }
 ];
 
+//var highScores = [{score:[score], initials:[initials.value]}];
+//var highScores = [{score:[], initials:[]}];
 var highScores = [];
 
 function toggleScreen(id, toggle) {
@@ -138,6 +140,8 @@ submitButton.addEventListener("click", function(event) {
     } else {
     newScoreText = [score, initials.value];
     highScores.push(newScoreText);
+    /* highScores.push.score(score);
+    highScores.push.initials(initials.value); */
     storeResults();
     renderHighscores();
     initials.innerHTML = "";
@@ -145,9 +149,6 @@ submitButton.addEventListener("click", function(event) {
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
     }
-    /* if (errorMessage !== null) {
-        errorMessage.textContent = "";
-    }; */
 });
 
 scoreButton.addEventListener("click", function(event) {
@@ -160,12 +161,17 @@ scoreButton.addEventListener("click", function(event) {
 })
 
 function storeResults() {
-    localStorage.setItem("highScores", JSON.stringify(highScores));
+    var scoreAndInitials = {
+        score: score,
+        initials: initials.value
+    };
+    localStorage.setItem("highScores", JSON.stringify(scoreAndInitials));
+    //localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 function renderHighscores() {
     highScoresList.innerHTML = "";
-
+    if (highScores !== null) {
     for (var i = 0; i < highScores.length; i++) {
         var highScore = highScores[i].join(" - ");
         var li = document.createElement("li");
@@ -174,10 +180,16 @@ function renderHighscores() {
         li.setAttribute("data-index", i);
         highScoresList.appendChild(li);
     }
+    } else {
+        highScores = [];
+    }
 }
 
 function init() {
     var storedScores = JSON.parse(localStorage.getItem("highScores"));
+   /*  if (storedScores !== null) {
+        highScores = storedScores;
+    } */
     highScores = storedScores;
     renderHighscores();
 }
