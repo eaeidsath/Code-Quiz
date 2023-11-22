@@ -145,6 +145,9 @@ submitButton.addEventListener("click", function(event) {
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
     }
+    /* if (errorMessage !== null) {
+        errorMessage.textContent = "";
+    }; */
 });
 
 scoreButton.addEventListener("click", function(event) {
