@@ -178,8 +178,10 @@ function renderHighscores() {
 
 function init() {
     var storedScores = JSON.parse(localStorage.getItem("highScores"));
-    highScores = storedScores;
-    renderHighscores();
+    if (storedScores !== null) {
+        highScores = storedScores;
+        renderHighscores();
+    }
 }
 
 function startTimer() {
