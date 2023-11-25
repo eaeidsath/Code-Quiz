@@ -64,6 +64,7 @@ function startGame() {
     this.toggleScreen("quiz", true);
     isFinished = false;
     timerCount = 60;
+    resultMessage.textContent = "";
     startTimer();
 }
 
@@ -105,7 +106,6 @@ function nextQuestion() {
         loadScore();
         currentQuestion = 0;
         loadQuestion();
-        resultMessage.innerHTML = "";
     }
 }
 
@@ -119,9 +119,11 @@ answer.addEventListener("click", function(event) {
         if (questions[currentQuestion].a[target].isCorrect) {
             score++;
             resultMessage.textContent = "Correct!";
+            submitMessage.textContent = "Correct!";
             nextQuestion();
         } else {
             resultMessage.textContent = "Incorrect.";
+            submitMessage.textContent = "Incorrect.";
             timerCount-=10;
             nextQuestion();
         }
@@ -140,14 +142,11 @@ submitButton.addEventListener("click", function(event) {
     highScores.push(newScoreText);
     storeResults();
     renderHighscores();
-    initials.innerHTML = "";
+    initials.value = "";
     toggleScreen("endScreen", false);
     toggleScreen("header", false);
     toggleScreen("scoreScreen", true);
     }
-    /* if (errorMessage !== null) {
-        errorMessage.textContent = "";
-    }; */
 });
 
 scoreButton.addEventListener("click", function(event) {
@@ -156,7 +155,9 @@ scoreButton.addEventListener("click", function(event) {
     toggleScreen("startScreen", false);
     toggleScreen("endScreen", false);
     toggleScreen("header", false);
+    toggleScreen("quiz", false);
     toggleScreen("scoreScreen", true);
+    clearInterval(timer);
 })
 
 function storeResults() {
