@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+    <!--This header holds the link to the high scores list and the timer countdown-->
     <header id="header">
         <button class="scoreButton">View high scores</button>
         <time id="timer">60 seconds left.</time>
     </header>
 
     <main>
+        <!--This is the start screen of the game-->
         <article id="startScreen">
             <h1>Coding Quiz</h1>
             <p>This quiz will test your knowledge on some coding-related topics.<br>You start with 60 seconds to complete the quiz. Wrong answers will subtract 10 seconds from your timer.</p>
             <button class="start" onclick="startGame()">Start Game</button>
         </article>
+        <!--This is where the quiz questions, answers, and correct/incorrect message are displayed-->
         <article id="quiz" style="display: none;">
             <section class="question"></section>
             <section class="answers"></section>
             <section class="result"></section>
         </article>
+        <!--This is the score submission screen-->
         <article id="endScreen" style="display: none;">
             <p>Finished.</p>
             <p>Your score is <span class="score"></span>.</p>
@@ -31,6 +35,7 @@
             <button class="submit">Submit</button>
             <p class="submitMessage"></p>
         </article>
+        <!--This is the high scores list-->
         <article id="scoreScreen" style="display: none;">
             <h2>Saved Scores</h2>
             <section>

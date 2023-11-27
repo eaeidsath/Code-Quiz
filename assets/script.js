@@ -50,15 +50,15 @@ var questions = [{
         {text: "4. onmouseover", isCorrect: false}]
     }
 ];
-
+//Array that holds saved scores
 var highScores = [];
-
+//Toggle function to change display of certain html elements
 function toggleScreen(id, toggle) {
     var element = document.getElementById(id);
     var display = (toggle) ? "block" : "none";
     element.style.display = display;
 }
-
+//Starts game, event listener is in the html
 function startGame() {
     this.toggleScreen("startScreen", false);
     this.toggleScreen("quiz", true);
@@ -67,7 +67,7 @@ function startGame() {
     resultMessage.textContent = "";
     startTimer();
 }
-
+//Loads the question and answers onto the page from the questions array
 function loadQuestion() {
     const question = document.querySelector(".question")
     const answer = document.querySelector(".answers")
@@ -78,7 +78,6 @@ function loadQuestion() {
     for (let i = 0; i < questions[currentQuestion].a.length; i++) {
         const choice = document.createElement("button");
  
-        //choice.type = "radio";
         choice.name = "answer";
         choice.value = i;
  
@@ -89,14 +88,14 @@ function loadQuestion() {
 }
 
 loadQuestion();
-
+//Toggle screen to score submission screen, prints score
 function loadScore() {
     this.toggleScreen("quiz", false);
     this.toggleScreen("endScreen", true);
     document.querySelector(".score").textContent = score;
     checkFinished();
 }
-
+//Moves to the next question in the array, or ends the quiz
 function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
@@ -110,7 +109,7 @@ function nextQuestion() {
 }
 
 const answer = document.querySelector(".answers")
-
+//Checks if selected answer is correct, adjusts score, and prints message
 answer.addEventListener("click", function(event) {
     event.preventDefault();
     function checkAnswer() {
@@ -131,7 +130,7 @@ answer.addEventListener("click", function(event) {
     checkAnswer();
 });
 
-
+//Submit button prints error message if input is empty, adds new score to score array, updates stored array, resets input field, toggles display to high scores list
 submitButton.addEventListener("click", function(event) {
     event.preventDefault();
     if (initials.value === "") {
@@ -148,7 +147,7 @@ submitButton.addEventListener("click", function(event) {
     toggleScreen("scoreScreen", true);
     }
 });
-
+//This is the view high scores button in header, toggles display to high score list, loads scores, and stops timer
 scoreButton.addEventListener("click", function(event) {
     event.preventDefault;
     renderHighscores();
@@ -159,11 +158,11 @@ scoreButton.addEventListener("click", function(event) {
     toggleScreen("scoreScreen", true);
     clearInterval(timer);
 })
-
+//stores highscores array
 function storeResults() {
     localStorage.setItem("highScores", JSON.stringify(highScores));
 }
-
+//renders each score in highscores array to the page
 function renderHighscores() {
     highScoresList.innerHTML = "";
 
@@ -176,7 +175,7 @@ function renderHighscores() {
         highScoresList.appendChild(li);
     }
 }
-
+//parses the stored array values and assigns highscores array this value so stored scores will be rendered even after refresh
 function init() {
     var storedScores = JSON.parse(localStorage.getItem("highScores"));
     if (storedScores !== null) {
@@ -184,7 +183,7 @@ function init() {
         renderHighscores();
     }
 }
-
+//function to start timer, display countdown, end timer, and load score submission screen
 function startTimer() {
     timer = setInterval(function() {
         timerCount--;
@@ -201,7 +200,7 @@ function startTimer() {
         }
     }, 1000);
 }
-
+//function to change isFinished value to true for the timer to load score submission screen when all questions have been answered
 function checkFinished() {
     if (finishValue === 1) {
         isFinished = true;
@@ -209,7 +208,7 @@ function checkFinished() {
 }
 
 init();
-
+//Return button: resets values and takes users back to start screen
 returnButton.addEventListener("click", function(event) {
     event.preventDefault();
     toggleScreen("scoreScreen", false);
@@ -218,10 +217,12 @@ returnButton.addEventListener("click", function(event) {
     isFinished = false;
     score = 0;
     finishValue = 0;
+    currentQuestion = 0;
+    loadQuestion();
     timerElement.textContent = "60 seconds left.";
     document.getElementById("header").style.display = "flex";
 })
-
+//Clear scores button: resets highscores array, clears local storage, removes previous scores' elements from page
 clearButton.addEventListener("click", function(event) {
     event.preventDefault();
     highScores = [];
